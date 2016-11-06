@@ -3,21 +3,21 @@ package com.wicaku.iak;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextName;
-    private EditText editTextAdress;
+    private EditText editTextAddress;
     private TextView textViewPersons;
     private Button buttonSave;
     /**
@@ -31,11 +31,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Firebase.setAndroidContext(this);
+
+        buttonSave = (Button) findViewById(R.id.buttonSave);
+        editTextName = (EditText) findViewById(R.id.editTextName);
+        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
+        textViewPersons = (TextView) findViewById(R.id.textViewPersons);
+
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    public void simpan(View v) {
+        Firebase ref = new Firebase(Config.FIREBASE_URL);
+
+        //Getting values to store
+        String name = editTextName.getText().toString().trim();
+        String address = editTextAddress.getText().toString().trim();
+
+        //Creating Person object
+        Person person = new Person();
+
+        //Adding values
+        person.setName(name);
+        person.setAddress(address);
+
+        //Storing values to firebase
+        ref.child("Person").setValue(person);
+    }
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -60,10 +85,6 @@ public class MainActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
