@@ -5,5 +5,5 @@ package com.wicaku.iak;
  */
 
 public class Config {
-    public static final String FIREBASE_URL = "https://iak-beginner.firebaseio.com/";
+    public static final String FIREBASE_URL = "https://iak-begin.firebaseio.com/";
 }

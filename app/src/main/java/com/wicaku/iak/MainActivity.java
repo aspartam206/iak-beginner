@@ -6,9 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -16,10 +21,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
 
+    Firebase ref;
     private EditText editTextName;
     private EditText editTextAddress;
     private TextView textViewPersons;
     private Button buttonSave;
+    private RadioGroup radioGender;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -32,34 +39,65 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Firebase.setAndroidContext(this);
+        ref = new Firebase(Config.FIREBASE_URL);
 
         buttonSave = (Button) findViewById(R.id.buttonSave);
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
         textViewPersons = (TextView) findViewById(R.id.textViewPersons);
-
+        radioGender = (RadioGroup) findViewById(R.id.radioGroupGender);
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        //Value event listener for realtime data update
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String string = "";
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    //Getting the data from snapshot
+                    Person person = postSnapshot.getValue(Person.class);
+                    //Adding it to a string
+                    string += "Name: " + person.getName() +
+                            "\nAddress: " + person.getAddress() +
+                            "\nAddress: " + person.getGender() + "\n\n";
+
+                }
+                //Displaying it on textview
+                textViewPersons.setText(string);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
     }
 
     public void simpan(View v) {
-        Firebase ref = new Firebase(Config.FIREBASE_URL);
 
         //Getting values to store
         String name = editTextName.getText().toString().trim();
         String address = editTextAddress.getText().toString().trim();
-
+        int selectedid = radioGender.getCheckedRadioButtonId();
+        RadioButton rgender = (RadioButton) findViewById(selectedid);
+        String gender = (String) rgender.getText();
         //Creating Person object
         Person person = new Person();
 
         //Adding values
         person.setName(name);
         person.setAddress(address);
+        person.setGender(gender);
 
         //Storing values to firebase
-        ref.child("Person").setValue(person);
+        ref.child(name).setValue(person); //using dynamic input
+        //ref.child("Person").setValue(person);//using static input
+        //ref.child("Person").child(name).setValue(person);//using static input
+
+
     }
 
     /**

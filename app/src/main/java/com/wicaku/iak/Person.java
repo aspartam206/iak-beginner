@@ -9,6 +9,7 @@ public class Person {
     //name and address string
     private String name;
     private String address;
+    private String gender;
 
     public Person() {
       /*Blank default constructor essential for Firebase*/
@@ -31,4 +32,11 @@ public class Person {
         this.address = address;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }
