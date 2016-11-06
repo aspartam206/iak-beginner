@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "363094362861",
+    "firebase_url": "https://iak-beginner.firebaseio.com",
+    "project_id": "iak-beginner",
+    "storage_bucket": "iak-beginner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363094362861:android:e2eb32dce02c60ad",
+        "android_client_info": {
+          "package_name": "com.wicaku.iak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "363094362861-f293t77t6j9jdc93roldeg8fknkev3df.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wicaku.iak",
+            "certificate_hash": "7AB217825809444E14BA20976021FE455BFB0061"
+          }
+        },
+        {
+          "client_id": "363094362861-l0p4815kala5cu0qtio8suomsnd2kgns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9NPiUThCC6pEzxgDejL0QoAAa-SPPTj4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "363094362861-l0p4815kala5cu0qtio8suomsnd2kgns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
