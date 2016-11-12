@@ -3,6 +3,7 @@ package com.wicaku.iak;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         textViewPersons = (TextView) findViewById(R.id.textViewPersons);
         radioGender = (RadioGroup) findViewById(R.id.radioGroupGender);
 
+        textViewPersons.setMovementMethod(new ScrollingMovementMethod());
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     //Adding it to a string
                     string += "Name: " + person.getName() +
                             "\nAddress: " + person.getAddress() +
-                            "\nAddress: " + person.getGender() + "\n\n";
+                            "\nGender: " + person.getGender() + "\n\n";
 
                 }
                 //Displaying it on textview
