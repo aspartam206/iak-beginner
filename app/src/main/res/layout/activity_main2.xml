@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn1"
-        android:text="Input/UpdateData"/>
+        android:text="UpdateData"
+        android:onClick="btnInsert" />
 
     <ListView
         android:layout_width="match_parent"
